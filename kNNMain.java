@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class kNNMain{
 
-  public static void main(String[] args) throws FileNotFoundException{
+  public static void main(String... args) throws FileNotFoundException{
 
   // TASK 1: Use command line arguments to point DataSet.readDataSet method to
     // the desired file. Choose a given DataPoint, and print its features and label
@@ -26,9 +26,9 @@ public class kNNMain{
 			
 
     //TASK 2:Use the DataSet class to split the fullDataSet into Training and Held Out Test Dataset
-		double trainPercentage = 0.8;
-		List<DataPoint> TestSet = DataSet.getTrainingSet(answer, trainPercentage);
-	
+		
+		List<DataPoint> TrainingSet = DataSet.getTrainingSet(answer, 0.7);
+		List<DataPoint> TestSet = DataSet.getTestSet(answer, 0.3);
 
     // TASK 3: Use the DataSet class methods to plot the 2D data (binary and multi-class)
 
