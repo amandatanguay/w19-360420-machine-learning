@@ -25,29 +25,81 @@ public class kNNMain{
 		
 			
 
-    //TASK 2:Use the DataSet class to split the fullDataSet into Training and Held Out Test Dataset
-		
-		List<DataPoint> TrainingSet = DataSet.getTrainingSet(answer, 0.7);
-		List<DataPoint> TestSet = DataSet.getTestSet(answer, 0.3);
+     //TASK 2:Use the DataSet class to split the fullDataSet into Training and Held Out Test Dataset
+    double testPercentage = 0.3;
+    double trainPercentage = 0.7;
+
+    List<DataPoint> testSet= DataSet.getTestSet(fullSet, testPercentage);
+    List<DataPoint> trainSet= DataSet.getTrainingSet(fullSet, trainPercentage);
+
 
     // TASK 3: Use the DataSet class methods to plot the 2D data (binary and multi-class)
 
-
+    //DO NOT DO THIS
 
     // TASK 4: write a new method in DataSet.java which takes as arguments to DataPoint objects,
     // and returns the Euclidean distance between those two points (as a double)
 
-
+    System.out.println(DataSet.distanceEuclid(dp,p2));
 
     // TASK 5: Use the KNNClassifier class to determine the k nearest neighbors to a given DataPoint,
     // and make a print a predicted target label
+
+    //DataPoint [] nearNeighbors;
+    //nearNeighbors = KNNClassifier.getNearestNeighbors(fullSet, p1);
+
+    KNNClassifier p = new KNNClassifier (5);
+    String predicted = p.predict(trainSet, testSet.get(32));
+    System.out.println("Predicted label: " + predicted);
 
 
 
     // TASK 6: loop over the datapoints in the held out test set, and make predictions for Each
     // point based on nearest neighbors in training set. Calculate accuracy of model.
 
+    
+    int right=0;
+    int total=0;
 
+    for (int i=0; i<1000; i++)
+    {
+      predicted = p.predict(trainSet, testSet.get(32));
+      if(predicted.equals(testSet.get(i).getLabel()))
+      {
+        right++;
+      }
+      total++;
+    }
+
+    double percentRight = (right/total)*100;
+    System.out.println("Percentage right: "+ percentRight);
+  }
+
+  public static double mean(double[] arr){
+    /*
+    Method that takes as an argument an array of doubles
+    Returns: average of the elements of array, as a double
+    */
+    double sum = 0.0;
+
+    for (double a : arr){
+      sum += a;
+    }
+    return (double)sum/arr.length;
+  }
+
+  public static double standardDeviation(double[] arr){
+    /*
+    Method that takes as an argument an array of doubles
+    Returns: standard deviation of the elements of array, as a double
+    Dependencies: requires the *mean* method written above
+    */
+    double avg = mean(arr);
+    double sum = 0.0;
+    for (double a : arr){
+      sum += Math.pow(a-avg,2);
+    }
+    return (double)sum/arr.length;
   }
 
 }
